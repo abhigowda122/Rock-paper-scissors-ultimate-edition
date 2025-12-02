@@ -4,7 +4,7 @@ A feature-rich, interactive Rock-Paper-Scissors game built with vanilla JavaScri
 
 **🔗 Live Demo**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Click_Here-brightgreen?style=for-the-badge)]([(https://abhigowda122.github.io/Rock-paper-scissors-ultimate-edition/)](https://abhigowda122.github.io/Rock-paper-scissors-ultimate-edition/))
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Click_Here-brightgreen?style=for-the-badge)](https://abhigowda122.github.io/Rock-paper-scissors-ultimate-edition/)
 ## 🌟 Features
 
 ### Core Gameplay
