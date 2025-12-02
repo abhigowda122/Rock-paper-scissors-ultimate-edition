@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors - Ultimate Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Sound Toggle -->
+    <button id="soundToggle" class="sound-toggle" title="Toggle Sound">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-hand-rock"></i>
+                Rock Paper Scissors
+                <span class="subtitle">Ultimate Edition</span>
+            </h1>
+            <div class="player-info">
+                <input type="text" id="playerName" placeholder="Enter your name" maxlength="20">
+                <button id="saveNameBtn" class="btn-small">Save</button>
+            </div>
+        </header>
+
+        <!-- Game Modes -->
+        <section class="game-modes">
+            <h2>Select Game Mode</h2>
+            <div class="mode-buttons">
+                <button class="mode-btn active" data-mode="classic">
+                    <i class="fas fa-hand-rock"></i>
+                    Classic
+                    <span>Rock, Paper, Scissors</span>
+                </button>
+                <button class="mode-btn" data-mode="extended">
+                    <i class="fas fa-hand-spock"></i>
+                    Extended
+                    <span>+ Lizard, Spock</span>
+                </button>
+                <button class="mode-btn" data-mode="tournament">
+                    <i class="fas fa-trophy"></i>
+                    Tournament
+                    <span>Best of 3/5/7</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Tournament Settings (Hidden by default) -->
+        <section class="tournament-settings" id="tournamentSettings">
+            <h3>Tournament Settings</h3>
+            <div class="tournament-options">
+                <button class="tournament-btn active" data-rounds="3">Best of 3</button>
+                <button class="tournament-btn" data-rounds="5">Best of 5</button>
+                <button class="tournament-btn" data-rounds="7">Best of 7</button>
+            </div>
+        </section>
+
+        <!-- Difficulty Settings -->
+        <section class="difficulty-section">
+            <h2>AI Difficulty</h2>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="easy">
+                    <i class="fas fa-smile"></i>
+                    Easy
+                    <span>Pure Random</span>
+                </button>
+                <button class="difficulty-btn active" data-difficulty="medium">
+                    <i class="fas fa-meh"></i>
+                    Medium
+                    <span>Pattern Recognition</span>
+                </button>
+                <button class="difficulty-btn" data-difficulty="hard">
+                    <i class="fas fa-brain"></i>
+                    Hard
+                    <span>Learns Your Patterns</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Score Board -->
+        <section class="scoreboard">
+            <div class="score-item player-score">
+                <h3 id="playerDisplayName">Player</h3>
+                <div class="score-value" id="playerScore">0</div>
+                <div class="streak">
+                    <i class="fas fa-fire"></i>
+                    <span id="currentStreak">0</span> Streak
+                </div>
+            </div>
+            <div class="score-item draws">
+                <h3>Draws</h3>
+                <div class="score-value" id="drawScore">0</div>
+                <div class="round-info">
+                    Round <span id="roundNumber">0</span>
+                </div>
+            </div>
+            <div class="score-item computer-score">
+                <h3>Computer</h3>
+                <div class="score-value" id="computerScore">0</div>
+                <div class="difficulty-display">
+                    <i class="fas fa-robot"></i>
+                    <span id="difficultyDisplay">Medium</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Arena -->
+        <section class="game-arena">
+            <div class="choice-display player-choice-display">
+                <div class="choice-icon" id="playerChoiceIcon">
+                    <i class="fas fa-question"></i>
+                </div>
+                <p id="playerChoiceText">Make Your Choice</p>
+            </div>
+
+            <div class="vs-divider">
+                <span>VS</span>
+            </div>
+
+            <div class="choice-display computer-choice-display">
+                <div class="choice-icon" id="computerChoiceIcon">
+                    <i class="fas fa-question"></i>
+                </div>
+                <p id="computerChoiceText">Waiting...</p>
+            </div>
+        </section>
+
+        <!-- Result Message -->
+        <div class="result-message" id="resultMessage"></div>
+
+        <!-- Choice Buttons -->
+        <section class="choices" id="choicesSection">
+            <button class="choice-btn" data-choice="rock" title="Rock (R)">
+                <i class="fas fa-hand-rock"></i>
+                <span>Rock</span>
+            </button>
+            <button class="choice-btn" data-choice="paper" title="Paper (P)">
+                <i class="fas fa-hand-paper"></i>
+                <span>Paper</span>
+            </button>
+            <button class="choice-btn" data-choice="scissors" title="Scissors (S)">
+                <i class="fas fa-hand-scissors"></i>
+                <span>Scissors</span>
+            </button>
+            <button class="choice-btn extended-choice" data-choice="lizard" title="Lizard (L)" style="display: none;">
+                <i class="fas fa-hand-lizard"></i>
+                <span>Lizard</span>
+            </button>
+            <button class="choice-btn extended-choice" data-choice="spock" title="Spock (K)" style="display: none;">
+                <i class="fas fa-hand-spock"></i>
+                <span>Spock</span>
+            </button>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="actions">
+            <button id="resetBtn" class="action-btn reset-btn">
+                <i class="fas fa-redo"></i>
+                Reset Game
+            </button>
+            <button id="rulesBtn" class="action-btn rules-btn">
+                <i class="fas fa-book"></i>
+                Rules
+            </button>
+            <button id="statsBtn" class="action-btn stats-btn">
+                <i class="fas fa-chart-line"></i>
+                Statistics
+            </button>
+            <button id="historyBtn" class="action-btn history-btn">
+                <i class="fas fa-history"></i>
+                History
+            </button>
+        </section>
+
+        <!-- Quick Stats -->
+        <section class="quick-stats">
+            <div class="stat-item">
+                <i class="fas fa-trophy"></i>
+                <span>Win Rate: <strong id="winRate">0%</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-fire"></i>
+                <span>Best Streak: <strong id="bestStreak">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-gamepad"></i>
+                <span>Total Games: <strong id="totalGames">0</strong></span>
+            </div>
+        </section>
+    </div>
+
+    <!-- Rules Modal -->
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="rulesModal">&times;</span>
+            <h2><i class="fas fa-book"></i> Game Rules</h2>
+            
+            <div class="rules-content">
+                <h3>Classic Mode</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-hand-rock"></i> <strong>Rock</strong> beats Scissors (crushes)</li>
+                    <li><i class="fas fa-hand-paper"></i> <strong>Paper</strong> beats Rock (covers)</li>
+                    <li><i class="fas fa-hand-scissors"></i> <strong>Scissors</strong> beats Paper (cuts)</li>
+                </ul>
+
+                <h3>Extended Mode</h3>
+                <ul class="rules-list">
+                    <li><i class="fas fa-hand-rock"></i> <strong>Rock</strong> beats Scissors & Lizard</li>
+                    <li><i class="fas fa-hand-paper"></i> <strong>Paper</strong> beats Rock & Spock</li>
+                    <li><i class="fas fa-hand-scissors"></i> <strong>Scissors</strong> beats Paper & Lizard</li>
+                    <li><i class="fas fa-hand-lizard"></i> <strong>Lizard</strong> beats Paper & Spock</li>
+                    <li><i class="fas fa-hand-spock"></i> <strong>Spock</strong> beats Rock & Scissors</li>
+                </ul>
+
+                <h3>Keyboard Shortcuts</h3>
+                <ul class="rules-list">
+                    <li><kbd>R</kbd> - Rock</li>
+                    <li><kbd>P</kbd> - Paper</li>
+                    <li><kbd>S</kbd> - Scissors</li>
+                    <li><kbd>L</kbd> - Lizard (Extended mode)</li>
+                    <li><kbd>K</kbd> - Spock (Extended mode)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Modal -->
+    <div class="modal" id="statsModal">
+        <div class="modal-content wide-modal">
+            <span class="close-modal" data-modal="statsModal">&times;</span>
+            <h2><i class="fas fa-chart-line"></i> Detailed Statistics</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Overall Performance</h3>
+                    <div class="stat-detail">
+                        <span>Wins:</span>
+                        <strong id="statsWins">0</strong>
+                    </div>
+                    <div class="stat-detail">
+                        <span>Losses:</span>
+                        <strong id="statsLosses">0</strong>
+                    </div>
+                    <div class="stat-detail">
+                        <span>Draws:</span>
+                        <strong id="statsDraws">0</strong>
+                    </div>
+                    <div class="stat-detail">
+                        <span>Win Rate:</span>
+                        <strong id="statsWinRate">0%</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Streak Records</h3>
+                    <div class="stat-detail">
+                        <span>Current Streak:</span>
+                        <strong id="statsCurrentStreak">0</strong>
+                    </div>
+                    <div class="stat-detail">
+                        <span>Best Win Streak:</span>
+                        <strong id="statsBestStreak">0</strong>
+                    </div>
+                    <div class="stat-detail">
+                        <span>Worst Loss Streak:</span>
+                        <strong id="statsWorstStreak">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Your Most Used</h3>
+                    <div id="playerChoiceStats" class="choice-stats"></div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Computer's Pattern</h3>
+                    <div id="computerChoiceStats" class="choice-stats"></div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+            <div class="stats-actions">
+                <button id="shareStatsBtn" class="btn-primary">
+                    <i class="fas fa-share"></i> Share Stats
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content wide-modal">
+            <span class="close-modal" data-modal="historyModal">&times;</span>
+            <h2><i class="fas fa-history"></i> Game History</h2>
+            
+            <div class="history-controls">
+                <button id="clearHistoryBtn" class="btn-danger">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
+                <button id="exportHistoryBtn" class="btn-primary">
+                    <i class="fas fa-download"></i> Export as JSON
+                </button>
+                <button id="exportCSVBtn" class="btn-primary">
+                    <i class="fas fa-file-csv"></i> Export as CSV
+                </button>
+            </div>
+
+            <div class="history-list" id="historyList">
+                <p class="no-history">No games played yet. Start playing to see history!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti"></canvas>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
