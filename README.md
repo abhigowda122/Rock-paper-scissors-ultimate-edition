@@ -2,6 +2,9 @@
 
 A feature-rich, interactive Rock-Paper-Scissors game built with vanilla JavaScript, HTML5, and CSS3. This game offers multiple game modes, AI difficulty levels, comprehensive statistics tracking, and a beautiful user interface with dark mode support.
 
+**🔗 Live Demo**
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Click_Here-brightgreen?style=for-the-badge)]([(https://abhigowda122.github.io/Rock-paper-scissors-ultimate-edition/)](https://abhigowda122.github.io/Rock-paper-scissors-ultimate-edition/))
 ## 🌟 Features
 
 ### Core Gameplay
